@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "440470042965",
+    "project_id": "expancetracker-5007e",
+    "storage_bucket": "expancetracker-5007e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:440470042965:android:c123a4959083355df797dc",
+        "android_client_info": {
+          "package_name": "com.expenserracker.app.expenserracker"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWoZtPo5M81OOqWOq3HVCj48PEaO5SeaE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
