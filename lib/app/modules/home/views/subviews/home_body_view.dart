@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -45,16 +47,31 @@ class HomeBodyView extends GetView<HomeController> {
                     ),
                   ],
                 ),
-                Obx(() => CircleAvatar(
-                  radius: 20.r,
-                  backgroundColor: AppColor.green.withOpacity(0.1),
-                  child: Text(
-                    controller.userName.value.isNotEmpty
-                        ? controller.userName.value[0].toUpperCase()
-                        : 'U',
-                    style: AppTextStyles.title14_w500(color: AppColor.green),
-                  ),
-                )),
+                Obx(() {
+                  final photoUrl = controller.userPhotoUrl.value;
+                  final name = controller.userName.value;
+
+                  if (photoUrl.isNotEmpty) {
+                    try {
+                      final bytes = base64Decode(
+                        photoUrl.contains(',') ? photoUrl.split(',').last : photoUrl,
+                      );
+                      return CircleAvatar(
+                        radius: 22.r,
+                        backgroundImage: MemoryImage(bytes),
+                      );
+                    } catch (_) {}
+                  }
+
+                  return CircleAvatar(
+                    radius: 22.r,
+                    backgroundColor: AppColor.green.withOpacity(0.1),
+                    child: Text(
+                      name.isNotEmpty ? name[0].toUpperCase() : 'U',
+                      style: AppTextStyles.title14_w500(color: AppColor.green),
+                    ),
+                  );
+                }),
               ],
             ),
             SizedBox(height: 16.h),

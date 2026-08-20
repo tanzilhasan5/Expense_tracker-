@@ -10,6 +10,7 @@ class HomeController extends GetxController {
   final expenses = <Expense>[].obs;
   final userName = 'User'.obs;
   final userEmail = ''.obs;
+  final userPhotoUrl = ''.obs;
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -38,6 +39,7 @@ class HomeController extends GetxController {
           if (doc.exists && doc.data() != null) {
             final data = doc.data() as Map<String, dynamic>;
             userName.value = data['name'] ?? 'User';
+            userPhotoUrl.value = data['photoUrl'] ?? '';
           }
         });
 
@@ -45,10 +47,9 @@ class HomeController extends GetxController {
         _expensesSubscription = _firestore
             .collection('expenses')
             .where('userId', isEqualTo: user.uid)
-            .orderBy('date', descending: true)
             .snapshots()
             .listen((snapshot) {
-          expenses.value = snapshot.docs.map((doc) {
+          final loaded = snapshot.docs.map((doc) {
             final data = doc.data() as Map<String, dynamic>;
             final timestamp = data['date'] as Timestamp?;
             return Expense(
@@ -59,6 +60,9 @@ class HomeController extends GetxController {
               note: data['title'] ?? '',
             );
           }).toList();
+
+          loaded.sort((a, b) => b.date.compareTo(a.date));
+          expenses.value = loaded;
         });
       } else {
         expenses.clear();
@@ -88,10 +92,9 @@ class HomeController extends GetxController {
       final snapshot = await _firestore
           .collection('expenses')
           .where('userId', isEqualTo: user.uid)
-          .orderBy('date', descending: true)
           .get();
 
-      expenses.value = snapshot.docs.map((doc) {
+      final loaded = snapshot.docs.map((doc) {
         final data = doc.data();
         final timestamp = data['date'] as Timestamp?;
         return Expense(
@@ -102,6 +105,28 @@ class HomeController extends GetxController {
           note: data['title'] ?? '',
         );
       }).toList();
+
+      loaded.sort((a, b) => b.date.compareTo(a.date));
+      expenses.value = loaded;
+    }
+  }
+
+  Future<void> updateUserName(String newName) async {
+    final user = _auth.currentUser;
+    if (user != null) {
+      await _firestore.collection('users').doc(user.uid).update({'name': newName});
+      userName.value = newName;
+    }
+  }
+
+  Future<void> updateUserPhoto(String base64OrUrl) async {
+    final user = _auth.currentUser;
+    if (user != null) {
+      await _firestore.collection('users').doc(user.uid).set(
+        {'photoUrl': base64OrUrl},
+        SetOptions(merge: true),
+      );
+      userPhotoUrl.value = base64OrUrl;
     }
   }
 

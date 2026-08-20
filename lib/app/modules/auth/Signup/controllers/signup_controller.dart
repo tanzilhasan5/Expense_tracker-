@@ -119,16 +119,19 @@ class SignupController extends GetxController {
           'uid': credential.user!.uid,
           'name': name,
           'email': email,
+          'photoUrl': '',
           'createdAt': FieldValue.serverTimestamp(),
         }).then((_) {
+          credential.user?.sendEmailVerification();
           isLoading.value = false;
-          Get.offAllNamed(Routes.HOME);
+          Get.offAllNamed(Routes.MAINNAVBER);
           Get.snackbar(
-            'Welcome',
-            'Account created successfully!',
+            'Account Created',
+            'Verification email sent to $email. Please verify your inbox.',
             snackPosition: SnackPosition.BOTTOM,
             backgroundColor: AppColor.green,
             colorText: Colors.white,
+            duration: const Duration(seconds: 5),
           );
         });
       }
