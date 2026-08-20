@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../../utils/colors.dart';
 import '../../../../utils/styles.dart';
+import '../../../data/models/expense_model.dart';
 import '../controllers/analytics_controller.dart';
 import '../../home/controllers/home_controller.dart';
 
@@ -335,7 +336,7 @@ class AnalyticsView extends GetView<AnalyticsController> {
           ),
         ),
       ),
-    );
+    ));
   }
 
   List<Widget> _buildDynamicBars(String frame, List<Expense> expenses) {
