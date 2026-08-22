@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../../utils/colors.dart';
 import '../controllers/mainnavber_controller.dart';
-import '../../home/views/subviews/home_body_view.dart';
+import '../../home/views/home_view.dart';
 import '../../Expenses/views/expenses_view.dart';
 import '../../Analytics/views/analytics_view.dart';
 import '../../Profile/views/profile_view.dart';
@@ -15,14 +15,14 @@ class MainnavberView extends GetView<MainnavberController> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> pages = [
-      const HomeBodyView(),
+      const HomeView(),
       const ExpensesView(),
       const AnalyticsView(),
       const ProfileView(),
     ];
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FA),
+      backgroundColor: Colors.blue.shade50,
       body: Obx(() => IndexedStack(
             index: controller.currentIndex.value,
             children: pages,

@@ -17,7 +17,7 @@ class AnalyticsView extends GetView<AnalyticsController> {
     final homeController = Get.find<HomeController>();
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FA),
+        backgroundColor: Colors.blue.shade50,
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: homeController.refreshData,
@@ -40,7 +40,7 @@ class AnalyticsView extends GetView<AnalyticsController> {
                 height: 44.h,
                 padding: EdgeInsets.all(4.w),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFECEFF1),
+                  color:  Colors.white,
                   borderRadius: BorderRadius.circular(12.r),
                 ),
                 child: Obx(() => Row(
@@ -52,12 +52,12 @@ class AnalyticsView extends GetView<AnalyticsController> {
                             child: Container(
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
-                                color: isSelected ? Colors.white : Colors.transparent,
+                                color: isSelected ? Colors.blue.shade50 : Colors.transparent,
                                 borderRadius: BorderRadius.circular(8.r),
                                 boxShadow: isSelected
                                     ? [
                                         BoxShadow(
-                                          color: Colors.black.withOpacity(0.04),
+                                          color: Colors.black.withOpacity(0.2),
                                           blurRadius: 4,
                                           offset: const Offset(0, 2),
                                         )

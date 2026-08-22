@@ -74,7 +74,7 @@ class ExpensesView extends GetView<ExpensesController> {
                               decoration: BoxDecoration(
                                 color: isSelected
                                     ? AppColor.green.withOpacity(0.08)
-                                    : Colors.white,
+                                    : Colors.blue.shade50,
                                 borderRadius: BorderRadius.circular(20.r),
                                 border: Border.all(
                                   color: isSelected
@@ -169,7 +169,9 @@ class ExpensesView extends GetView<ExpensesController> {
                         ),
                         itemBuilder: (context, index) {
                           final item = filteredList[index];
-                          return _buildTransactionRow(item);
+                          return Card(
+                              color: Colors.blue.shade50,
+                              child: _buildTransactionRow(item));
                         },
                       ),
                     ),
@@ -221,7 +223,7 @@ class ExpensesView extends GetView<ExpensesController> {
             width: 42.w,
             height: 42.w,
             decoration: BoxDecoration(
-              color: catColor.withOpacity(0.08),
+              color: Colors.blue.shade50,
               borderRadius: BorderRadius.circular(10.r),
             ),
             alignment: Alignment.center,
