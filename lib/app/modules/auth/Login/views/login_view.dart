@@ -17,9 +17,10 @@ class LoginView extends GetView<LoginController> {
     return Scaffold(
       body: CustomScaffold(
         child: SafeArea(
+
           child: Center(
             child: SingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.h),
+              padding: EdgeInsets.symmetric(horizontal: 24.w,),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -125,27 +126,6 @@ class LoginView extends GetView<LoginController> {
                         SizedBox(height: 16.h),
 
                         // Password
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'PASSWORD',
-                              style: TextStyle(
-                                color: AppColor.secondarytextColor,
-                                fontSize: 9.sp,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 1.0,
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () => Get.toNamed(Routes.FORGET_PASSWORD),
-                              child: Text(
-                                'Forgot Password?',
-                                style: AppTextStyles.title12_w600(color: AppColor.green),
-                              ),
-                            ),
-                          ],
-                        ),
                         SizedBox(height: 8.h),
                         Obx(() => TextField(
                               controller: controller.passwordController,

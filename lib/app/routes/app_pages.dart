@@ -1,3 +1,5 @@
+import 'package:expenserracker/app/modules/auth/Login/bindings/login_binding.dart';
+import 'package:expenserracker/app/modules/auth/Login/views/login_view.dart';
 import 'package:get/get.dart';
 
 import '../modules/Add_expenses/bindings/add_expenses_binding.dart';
@@ -10,12 +12,8 @@ import '../modules/Expenses/bindings/expenses_binding.dart';
 import '../modules/Expenses/views/expenses_view.dart';
 import '../modules/Profile/bindings/profile_binding.dart';
 import '../modules/Profile/views/profile_view.dart';
-import '../modules/auth/Forget_password/bindings/forget_password_binding.dart';
-import '../modules/auth/Forget_password/views/forget_password_view.dart';
-import '../modules/auth/Login/bindings/login_binding.dart';
-import '../modules/auth/Login/views/login_view.dart';
-import '../modules/auth/Reset_password/bindings/reset_password_binding.dart';
-import '../modules/auth/Reset_password/views/reset_password_view.dart';
+
+
 import '../modules/auth/Signup/bindings/signup_binding.dart';
 import '../modules/auth/Signup/views/signup_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -45,16 +43,6 @@ class AppPages {
       name: _Paths.SIGNUP,
       page: () => const SignupView(),
       binding: SignupBinding(),
-    ),
-    GetPage(
-      name: _Paths.FORGET_PASSWORD,
-      page: () => const ForgetPasswordView(),
-      binding: ForgetPasswordBinding(),
-    ),
-    GetPage(
-      name: _Paths.RESET_PASSWORD,
-      page: () => const ResetPasswordView(),
-      binding: ResetPasswordBinding(),
     ),
     GetPage(
       name: _Paths.EXPENSES,
