@@ -6,14 +6,10 @@ import '../modules/Add_expenses/bindings/add_expenses_binding.dart';
 import '../modules/Add_expenses/views/add_expenses_view.dart';
 import '../modules/Analytics/bindings/analytics_binding.dart';
 import '../modules/Analytics/views/analytics_view.dart';
-import '../modules/Edit_Profile/bindings/edit_profile_binding.dart';
-import '../modules/Edit_Profile/views/edit_profile_view.dart';
 import '../modules/Expenses/bindings/expenses_binding.dart';
 import '../modules/Expenses/views/expenses_view.dart';
 import '../modules/Profile/bindings/profile_binding.dart';
 import '../modules/Profile/views/profile_view.dart';
-
-
 import '../modules/auth/Signup/bindings/signup_binding.dart';
 import '../modules/auth/Signup/views/signup_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -70,11 +66,6 @@ class AppPages {
       name: _Paths.PROFILE,
       page: () => const ProfileView(),
       binding: ProfileBinding(),
-    ),
-    GetPage(
-      name: _Paths.EDIT_PROFILE,
-      page: () => const EditProfileView(),
-      binding: EditProfileBinding(),
     ),
     GetPage(
       name: _Paths.MAINNAVBER,

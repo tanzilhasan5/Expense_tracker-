@@ -1,17 +1,279 @@
-# expenserracker
+# Expense Tracker (Expenserracker)
 
-A new Flutter project.
+A modern, responsive, and real-time personal finance & expense management mobile application built with **Flutter**, **GetX Pattern**, and **Firebase** (Authentication & Cloud Firestore).
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## 📑 Table of Contents
+- [Project Overview](#-project-overview)
+- [Tech Stack](#-tech-stack)
+- [Project Architecture](#-project-architecture)
+- [Detailed Project Structure](#-detailed-project-structure)
+  - [Root Directory Layout](#root-directory-layout)
+  - [Core `lib/` Architecture](#core-lib-architecture)
+- [Directory & Module Breakdown](#-directory--module-breakdown)
+  - [1. Data Layer (`lib/app/data/`)](#1-data-layer-libappdata)
+  - [2. Feature Modules (`lib/app/modules/`)](#2-feature-modules-libappmodules)
+  - [3. Routing (`lib/app/routes/`)](#3-routing-libapproutes)
+  - [4. Reusable Widgets (`lib/app/widgets/`)](#4-reusable-widgets-libappwidgets)
+  - [5. Core Services (`lib/services/`)](#5-core-services-libservices)
+  - [6. Utilities & Styling (`lib/utils/`)](#6-utilities--styling-libutils)
+- [Data & State Flow](#-data--state-flow)
+- [Getting Started](#-getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation & Setup](#installation--setup)
 
-A few resources to get you started if this is your first Flutter project:
+---
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+## 📌 Project Overview
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+**Expense Tracker** helps users manage daily finances seamlessly with real-time cloud persistence:
+- **Authentication**: Secure email/password login and account creation with Firebase Auth.
+- **Real-Time Synchronization**: Live sync of expenses and profile data powered by Cloud Firestore.
+- **Categorization & Analytics**: Categorized expenses (Shopping, Bills, Food, Transport, Others) with spending statistics and average daily expenditures.
+- **Responsive UI**: Screen-adaptive layout using `flutter_screenutil` and Google Fonts.
+- **GetX Pattern**: Clean separation of business logic (`Controllers`), dependency injection (`Bindings`), and UI layer (`Views`).
+
+---
+
+## 🛠 Tech Stack
+
+| Technology | Purpose |
+|---|---|
+| **Flutter SDK** | Cross-platform mobile application framework |
+| **Dart** | Programming language |
+| **GetX** (`get`) | State management, dependency injection, and named routing |
+| **Firebase Core & Auth** | Backend initialization and user authentication |
+| **Cloud Firestore** | NoSQL real-time cloud database for storing user expenses |
+| **flutter_screenutil** | Dynamic UI scaling and responsive screen adaptation |
+| **Google Fonts** | Custom typography |
+| **Intl** | Date formatting and currency/number parsing |
+| **Image Picker** | Avatar / profile image picking support |
+
+---
+
+## 🏛 Project Architecture
+
+This application follows the **GetX Pattern (Clean Architecture)**:
+
+```
+┌────────────────────────────────────────────────────────┐
+│                        VIEW                            │
+│           (Stateless / GetView with Obx)               │
+└───────────────────────────▲────────────────────────────┘
+                            │ listens to reactive state
+┌───────────────────────────┴────────────────────────────┐
+│                     CONTROLLER                         │
+│           (Business Logic & State: .obs)               │
+└───────────────▲────────────────────────▲───────────────┘
+                │ delegates              │ maps data
+┌───────────────┴───────────────┐ ┌──────┴───────────────┐
+│           SERVICES            │ │        MODELS        │
+│ (AuthService, ExpenseService) │ │    (ExpenseModel)    │
+└───────────────▲───────────────┘ └──────────────────────┘
+                │ interacts
+┌───────────────┴───────────────┐
+│     Firebase / Firestore      │
+└───────────────────────────────┘
+```
+
+---
+
+## 📂 Detailed Project Structure
+
+### Root Directory Layout
+
+```
+Expenserracker/
+├── android/                   # Native Android configuration, Gradle files & manifest
+├── ios/                       # Native iOS configuration & Xcode workspace
+├── lib/                       # Core Dart source code of the Flutter application
+├── test/                      # Unit and widget test files
+├── .gitignore                 # Git ignored files & directories
+├── analysis_options.yaml      # Static analysis & linter configurations
+├── firebase.json              # Firebase CLI configuration
+├── pubspec.yaml               # Project dependencies, SDK constraints & assets
+└── README.md                  # Project documentation & structure reference
+```
+
+### Core `lib/` Architecture
+
+```
+lib/
+├── firebase_options.dart      # Platform-specific Firebase credentials generated by CLI
+├── main.dart                  # Application entry point, Firebase init & route configuration
+│
+├── app/
+│   ├── data/                  # Data models and domain entities
+│   │   └── models/
+│   │       └── expense_model.dart
+│   │
+│   ├── modules/               # Feature-based modular architecture (GetX modules)
+│   │   ├── Add_expenses/      # Add Expense feature
+│   │   │   ├── bindings/
+│   │   │   │   └── add_expenses_binding.dart
+│   │   │   ├── controllers/
+│   │   │   │   └── add_expenses_controller.dart
+│   │   │   └── views/
+│   │   │       └── add_expenses_view.dart
+│   │   │
+│   │   ├── Analytics/         # Spending analytics & category breakdown
+│   │   │   ├── bindings/
+│   │   │   │   └── analytics_binding.dart
+│   │   │   ├── controllers/
+│   │   │   │   └── analytics_controller.dart
+│   │   │   └── views/
+│   │   │       └── analytics_view.dart
+│   │   │
+│   │   ├── auth/              # Authentication modules
+│   │   │   ├── Login/
+│   │   │   │   ├── bindings/
+│   │   │   │   │   └── login_binding.dart
+│   │   │   │   ├── controllers/
+│   │   │   │   │   └── login_controller.dart
+│   │   │   │   └── views/
+│   │   │   │       └── login_view.dart
+│   │   │   └── Signup/
+│   │   │       ├── bindings/
+│   │   │       │   └── signup_binding.dart
+│   │   │       ├── controllers/
+│   │   │       │   └── signup_controller.dart
+│   │   │       └── views/
+│   │   │           └── signup_view.dart
+│   │   │
+│   │   ├── Expenses/          # Transactions history and management
+│   │   │   ├── bindings/
+│   │   │   │   └── expenses_binding.dart
+│   │   │   ├── controllers/
+│   │   │   │   └── expenses_controller.dart
+│   │   │   └── views/
+│   │   │       └── expenses_view.dart
+│   │   │
+│   │   ├── home/              # Dashboard overview & summary metrics
+│   │   │   ├── bindings/
+│   │   │   │   └── home_binding.dart
+│   │   │   ├── controllers/
+│   │   │   │   └── home_controller.dart
+│   │   │   └── views/
+│   │   │       └── home_view.dart
+│   │   │
+│   │   ├── mainnavber/        # Persistent bottom navigation shell
+│   │   │   ├── bindings/
+│   │   │   │   └── mainnavber_binding.dart
+│   │   │   ├── controllers/
+│   │   │   │   └── mainnavber_controller.dart
+│   │   │   └── views/
+│   │   │       └── mainnavber_view.dart
+│   │   │
+│   │   └── Profile/           # User profile & account preferences
+│   │       ├── bindings/
+│   │       │   └── profile_binding.dart
+│   │       ├── controllers/
+│   │       │   └── profile_controller.dart
+│   │       └── views/
+│   │           └── profile_view.dart
+│   │
+│   ├── routes/                # Centralized GetX routing definitions
+│   │   ├── app_pages.dart     # Page definitions and binding mappings
+│   │   └── app_routes.dart    # Route name constants and path mappings
+│   │
+│   └── widgets/               # Reusable presentation components
+│       └── custom_button.dart # Common stylized button widget
+│
+├── services/                  # Backend and Firestore infrastructure services
+│   ├── auth_service.dart      # Firebase Authentication & user profile service
+│   └── expense_service.dart   # Firestore CRUD operations for expenses
+│
+└── utils/                     # Themes, styles, constants, and UI helpers
+    ├── colors.dart            # AppColor constants & gradient definitions
+    ├── custom_scaffold.dart   # Standardized app screen wrapper
+    ├── images.dart            # Asset image path definitions
+    ├── responsive.dart        # Screen dimension helpers
+    └── styles.dart            # Typography & AppTextStyles definitions
+```
+
+---
+
+## 🔍 Directory & Module Breakdown
+
+### 1. Data Layer (`lib/app/data/`)
+Contains models and business data transfer objects used across controllers and views.
+- **`models/expense_model.dart`**: Model representing an individual expense entry (`id`, `amount`, `category`, `date`, `note`).
+
+### 2. Feature Modules (`lib/app/modules/`)
+Each module encapsulates a distinct functional domain following the GetX Pattern (`Binding`, `Controller`, `View`):
+
+- **`auth/Login/` & `auth/Signup/`**:
+  - Handles authentication lifecycle, form validation, error dialogs, and navigation upon successful login/signup.
+- **`home/`**:
+  - Main dashboard displaying total expenses, monthly calculations, category breakdowns, and real-time Firestore stream listeners.
+- **`Expenses/`**:
+  - Dedicated expense management view showing transaction lists and expense details.
+- **`Add_expenses/`**:
+  - Input screen for creating new transactions with title, amount, and category selection.
+- **`Analytics/`**:
+  - Visual summary and analytical breakdown of user expenses.
+- **`Profile/`**:
+  - User details display, profile updates, and sign-out controls.
+- **`mainnavber/`**:
+  - Bottom navigation bar holding tabs for Home, Expenses, Analytics, and Profile with state preservation.
+
+### 3. Routing (`lib/app/routes/`)
+- **`app_routes.dart`**: Declares string constants for route names (`Routes.HOME`, `Routes.LOGIN`, `Routes.MAINNAVBER`, etc.).
+- **`app_pages.dart`**: Configures `GetPage` list linking routes to their respective `View` and `Binding`.
+
+### 4. Reusable Widgets (`lib/app/widgets/`)
+- Shared widgets like `CustomButton` that maintain uniform styling, loading states, and elevation across all pages.
+
+### 5. Core Services (`lib/services/`)
+Separates cloud database interaction from UI logic:
+- **`auth_service.dart`**: Methods for `signUpWithEmailAndPassword`, `loginWithEmailAndPassword`, `signOut`, and `getUserDetails`.
+- **`expense_service.dart`**: Methods for `addExpense` and `getUserExpensesStream` filtered by current `userId`.
+
+### 6. Utilities & Styling (`lib/utils/`)
+- **`colors.dart`**: Palette colors (`primary`, `green`, `deepTeal`, etc.) and background gradients.
+- **`styles.dart`**: Comprehensive text styling standards (`title16_w700`, `title24_w700`, etc.).
+- **`responsive.dart`**: Helpers for responsive scaling with `ScreenUtil`.
+- **`custom_scaffold.dart`**: Scaffold wrapper with gradient support.
+
+---
+
+## 🔄 Data & State Flow
+
+1. **User Authentication**:
+   - `main.dart` inspects `FirebaseAuth.instance.currentUser`.
+   - If logged in, initializes to `Routes.MAINNAVBER`; otherwise defaults to `Routes.LOGIN`.
+2. **Real-time Firestore Streams**:
+   - `HomeController` subscribes to Firestore query snapshots filtered by `userId`.
+   - Incoming snapshots automatically update `expenses.value` (an `.obs` reactive list).
+   - UI views wrapped with `Obx` reactively re-render whenever the data changes.
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- [Flutter SDK](https://docs.flutter.dev/get-started/install) (version `^3.12.1` or higher)
+- Android Studio / VS Code with Flutter & Dart extensions
+- Configured Firebase Project (Google Services JSON / Plist configured via FlutterFire CLI)
+
+### Installation & Setup
+
+1. **Clone the repository**:
+   ```bash
+   git clone <repository_url>
+   cd Expenserracker
+   ```
+
+2. **Install dependencies**:
+   ```bash
+   flutter pub get
+   ```
+
+3. **Verify Firebase Configuration**:
+   Ensure `lib/firebase_options.dart` and `firebase.json` match your Firebase project.
+
+4. **Run the application**:
+   ```bash
+   flutter run
+   ```
